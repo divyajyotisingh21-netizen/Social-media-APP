@@ -1,0 +1,5431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Socially</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #fdf2f8, #eef2ff);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: white;
+            padding: 40px 35px;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .logo-icon {
+            width: 65px;
+            height: 65px;
+            margin: auto;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .logo h1 {
+            margin-top: 15px;
+            font-size: 32px;
+            color: #222;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin: 8px 0 30px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            outline: none;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: #833ab4;
+            box-shadow: 0 0 0 3px rgba(131, 58, 180, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #833ab4, #fd1d1d);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: 0.2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.95;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 25px 0;
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .demo-info {
+            text-align: center;
+            background: #f8f8f8;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #888;
+            font-size: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 30px 22px;
+            }
+
+            .logo h1 {
+                font-size: 28px;
+            }
+        }
+        .hidden {
+         display: none;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.comment {
+    padding: 7px 0;
+    font-size: 14px;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    height: 65px;
+
+    background: white;
+
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav button {
+    border: none;
+    background: none;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+}
+
+.bottom-nav span {
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+@media (max-width: 600px) {
+
+    .topbar {
+        padding: 12px 15px;
+    }
+
+    .bottom-nav {
+        gap: 45px;
+    }
+}
+.post {
+    background: white;
+    margin: 15px auto;
+    padding: 18px;
+    border-radius: 15px;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.post-header {
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.post-content {
+    font-size: 15px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.post-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.post-actions button {
+    border: none;
+    background: #f5f5f5;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.post-actions button:hover {
+    background: #eee;
+}
+/* ================= STORIES ================= */
+
+.stories-section {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 15px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+.stories-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.stories-title h3 {
+    font-size: 18px;
+    color: #222;
+}
+
+.stories-title span {
+    font-size: 13px;
+    color: #833ab4;
+    cursor: pointer;
+}
+
+.stories {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+}
+
+.stories::-webkit-scrollbar {
+    display: none;
+}
+
+.story {
+    min-width: 65px;
+    text-align: center;
+}
+
+.story-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 25px;
+
+    background: linear-gradient(
+        135deg,
+        #833ab4,
+        #fd1d1d,
+        #fcb045
+    );
+
+    border: 3px solid white;
+
+    box-shadow:
+        0 0 0 3px #fd1d1d;
+
+    cursor: pointer;
+}
+
+.story p {
+    margin-top: 7px;
+    font-size: 12px;
+    color: #444;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.add-story {
+    background: #f5f5f5;
+    color: #833ab4;
+    box-shadow: none;
+    border: 2px solid #ddd;
+}
+
+.add-story span {
+    font-size: 25px;
+}
+/* ================= STORY MODAL ================= */
+
+.story-modal {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.story-modal-box {
+    width: 90%;
+    max-width: 400px;
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    position: relative;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.story-modal-box h2 {
+    margin-bottom: 8px;
+}
+
+.story-modal-box p {
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.story-modal-box textarea {
+    width: 100%;
+    height: 120px;
+
+    padding: 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 12px;
+
+    resize: none;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+.add-story-btn {
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        135deg,
+        #833ab4,
+        #fd1d1d,
+        #fcb045
+    );
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.close-story {
+    position: absolute;
+
+    top: 12px;
+    right: 15px;
+
+    border: none;
+
+    background: none;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+/* ================= STORY VIEWER ================= */
+
+.story-viewer {
+     backdrop-filter: blur(8px);
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.92);
+
+    z-index: 2000;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+.story-viewer-content {
+    width: 100%;
+    max-width: 430px;
+
+    height: 90vh;
+
+    position: relative;
+
+    background: linear-gradient(
+        135deg,
+        #833ab4,
+        #fd1d1d,
+        #fcb045
+    );
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    color: white;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+.story-close {
+    position: fixed;
+
+    top: 20px;
+    right: 25px;
+
+    border: none;
+
+    background: none;
+
+    color: white;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    z-index: 2100;
+}
+
+.story-progress {
+    width: 100%;
+
+    height: 4px;
+
+    background: rgba(255, 255, 255, 0.5);
+
+    border-radius: 5px;
+
+    margin-bottom: 20px;
+}
+
+.story-user {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.story-user-icon {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    color: #833ab4;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 20px;
+}
+
+.story-viewer-text {
+    flex: 1;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    line-height: 1.5;
+}
+/* ================= MESSAGES ================= */
+
+.messages-page {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: #f8f8fb;
+
+    z-index: 1500;
+
+    overflow-y: auto;
+}
+
+.messages-header {
+    height: 65px;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid #ddd;
+}
+
+.messages-header button {
+    border: none;
+
+    background: none;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+.messages-header h2 {
+    font-size: 20px;
+}
+
+.message-search {
+    padding: 15px;
+}
+
+.message-search input {
+    width: 100%;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #e9e9ef;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+.conversation-list {
+    background: white;
+}
+
+.conversation {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 15px;
+
+    border-bottom: 1px solid #eee;
+
+    cursor: pointer;
+}
+
+.conversation:hover {
+    background: #f8f8f8;
+}
+
+.chat-avatar {
+    width: 50px;
+    height: 50px;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #833ab4,
+        #fd1d1d,
+        #fcb045
+    );
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 22px;
+}
+
+.conversation-info {
+    flex: 1;
+}
+
+.conversation-info strong {
+    font-size: 15px;
+}
+
+.conversation-info p {
+    margin-top: 4px;
+
+    color: #777;
+
+    font-size: 13px;
+}
+
+.chat-time {
+    font-size: 11px;
+
+    color: #999;
+}
+/* ================= CHAT WINDOW ================= */
+
+.chat-page {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: #f5f5f8;
+
+    z-index: 1800;
+
+    flex-direction: column;
+}
+
+
+.chat-header {
+    height: 65px;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 0 15px;
+
+    border-bottom: 1px solid #ddd;
+}
+
+
+.chat-header > button {
+    border: none;
+
+    background: none;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+
+.chat-header-user {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.chat-header-user small {
+    display: block;
+
+    color: #22a447;
+
+    font-size: 11px;
+
+    margin-top: 3px;
+}
+
+
+.chat-messages {
+    flex: 1;
+
+    padding: 20px;
+
+    overflow-y: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+.received-message,
+.sent-message {
+    max-width: 75%;
+
+    padding: 10px 14px;
+
+    border-radius: 18px;
+
+    font-size: 14px;
+
+    line-height: 1.4;
+}
+
+
+.received-message {
+    align-self: flex-start;
+
+    background: white;
+
+    border-bottom-left-radius: 5px;
+}
+
+
+.sent-message {
+    align-self: flex-end;
+
+    background: linear-gradient(
+        135deg,
+        #833ab4,
+        #fd1d1d
+    );
+
+    color: white;
+
+    border-bottom-right-radius: 5px;
+}
+
+
+.chat-input-area {
+    background: white;
+
+    padding: 10px;
+
+    display: flex;
+
+    gap: 8px;
+
+    border-top: 1px solid #ddd;
+}
+
+
+.chat-input-area input {
+    flex: 1;
+
+    padding: 12px 15px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 25px;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+
+.chat-input-area button {
+    width: 45px;
+
+    height: 45px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #833ab4,
+        #fd1d1d
+    );
+
+    color: white;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+/* ================= MODERN TOP BAR ================= */
+
+.topbar{
+
+    position: sticky;
+
+    top:0;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px 22px;
+
+    box-shadow:0 4px 18px rgba(0,0,0,.08);
+
+    z-index:100;
+
+}
+
+
+.logo-area h1{
+
+    font-size:28px;
+
+    background:linear-gradient(90deg,#833ab4,#fd1d1d,#fcb045);
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+}
+
+
+.top-icons{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+
+.top-icons button{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f5f5f5;
+
+    cursor:pointer;
+
+    font-size:19px;
+
+    transition:.3s;
+
+}
+
+
+.top-icons button:hover{
+
+    transform:scale(1.08);
+
+    background:#ffe8ff;
+
+}
+/* ================= SEARCH PAGE ================= */
+
+.search-page{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:white;
+
+    z-index:2500;
+
+}
+
+
+.search-box{
+
+    display:flex;
+
+    gap:12px;
+
+    padding:18px;
+
+}
+
+
+.search-box input{
+
+    flex:1;
+
+    padding:13px;
+
+    border-radius:12px;
+
+    border:1px solid #ddd;
+
+}
+
+
+.search-result{
+
+    padding:20px;
+
+}
+
+
+.search-result p{
+
+    padding:14px 0;
+
+    border-bottom:1px solid #eee;
+
+    cursor:pointer;
+
+}
+/* ================= NOTIFICATIONS ================= */
+
+.notifications-page {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: #f8f8fb;
+
+    z-index: 2400;
+
+    overflow-y: auto;
+
+}
+
+
+.notifications-header {
+
+    height: 65px;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid #ddd;
+
+}
+
+
+.notifications-header button {
+
+    border: none;
+
+    background: none;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+}
+
+
+.notifications-header h2 {
+
+    font-size: 20px;
+
+}
+
+
+.notification-list {
+
+    background: white;
+
+}
+
+
+.notification {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 16px;
+
+    border-bottom: 1px solid #eee;
+
+}
+
+
+.notification-avatar {
+
+    width: 48px;
+
+    height: 48px;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #833ab4,
+        #fd1d1d,
+        #fcb045
+    );
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 21px;
+
+}
+
+
+.notification-text {
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+
+.notification-text small {
+
+    display: block;
+
+    color: #999;
+
+    font-size: 11px;
+
+    margin-top: 3px;
+
+}
+/* ================= PROFILE ================= */
+
+.profile-page {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: #f8f8fb;
+
+    z-index: 2300;
+
+    overflow-y: auto;
+
+}
+
+
+.profile-header {
+
+    height: 65px;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid #ddd;
+
+}
+
+
+.profile-header button {
+
+    border: none;
+
+    background: none;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+}
+
+
+.profile-header h2 {
+
+    font-size: 20px;
+
+}
+
+
+.profile-info {
+
+    background: white;
+
+    text-align: center;
+
+    padding: 30px 20px;
+
+}
+
+
+.profile-avatar {
+
+    width: 100px;
+
+    height: 100px;
+
+    margin: auto;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #833ab4,
+        #fd1d1d,
+        #fcb045
+    );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 45px;
+
+    border: 5px solid white;
+
+    box-shadow: 0 0 0 3px #fd1d1d;
+
+}
+
+
+.profile-info h2 {
+
+    margin-top: 15px;
+
+}
+
+
+.profile-email {
+
+    color: #777;
+
+}
+
+
+.profile-bio {
+
+    color: #555;
+
+    margin: 8px 0 20px;
+
+}
+
+
+.profile-stats {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 50px;
+
+    margin: 20px 0;
+
+}
+
+
+.profile-stats div {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+}
+
+
+.profile-stats span {
+
+    font-size: 12px;
+
+    color: #777;
+
+}
+
+
+.edit-profile-btn {
+
+    padding: 10px 30px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #222;
+
+    color: white;
+
+    cursor: pointer;
+
+}
+
+
+.profile-post-title {
+
+    padding: 18px;
+
+    font-weight: bold;
+
+    background: #f8f8fb;
+
+}
+
+
+.profile-post {
+
+    background: white;
+
+    padding: 20px;
+
+    border-bottom: 1px solid #eee;
+
+    font-size: 14px;
+
+}
+/* ================= EDIT PROFILE ================= */
+
+.edit-profile-modal {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 3000;
+
+}
+
+.edit-profile-box {
+
+    width: 90%;
+
+    max-width: 400px;
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    position: relative;
+
+}
+
+.edit-profile-box h2 {
+
+    margin-bottom: 5px;
+
+}
+
+.edit-profile-box p {
+
+    color: #777;
+
+    font-size: 13px;
+
+    margin-bottom: 20px;
+
+}
+
+.edit-profile-box label {
+
+    display: block;
+
+    margin-top: 15px;
+
+    margin-bottom: 6px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+}
+
+.edit-profile-box input,
+.edit-profile-box textarea {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 14px;
+
+}
+
+.edit-profile-box textarea {
+
+    height: 90px;
+
+    resize: none;
+
+}
+
+.close-edit {
+
+    position: absolute;
+
+    top: 12px;
+
+    right: 15px;
+
+    border: none;
+
+    background: none;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+}
+
+.save-profile-btn {
+
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        135deg,
+        #833ab4,
+        #fd1d1d,
+        #fcb045
+    );
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+/* ================= DARK MODE ================= */
+
+body.dark-mode {
+    background: #101014;
+    color: #f5f5f5;
+}
+
+
+/* TOP BAR */
+
+body.dark-mode .topbar {
+    background: #18181d;
+    border-bottom: 1px solid #292930;
+}
+
+
+body.dark-mode .top-icons button {
+    background: #25252c;
+    color: white;
+}
+
+
+/* FEED */
+
+body.dark-mode .feed-container {
+    background: #101014;
+}
+
+
+body.dark-mode .welcome {
+    background: #18181d;
+    color: white;
+}
+
+
+/* POSTS */
+
+body.dark-mode .post {
+    background: #18181d;
+    color: white;
+}
+
+
+body.dark-mode .post p {
+    color: #ddd;
+}
+
+
+/* CREATE POST */
+
+body.dark-mode .create-box {
+    background: #18181d;
+    color: white;
+}
+
+
+body.dark-mode textarea {
+    background: #25252c;
+    color: white;
+    border-color: #444;
+}
+
+
+/* BOTTOM NAV */
+
+body.dark-mode .bottom-nav {
+    background: #18181d;
+    border-top-color: #292930;
+}
+
+
+body.dark-mode .bottom-nav button {
+    color: white;
+}
+
+
+/* MESSAGES */
+
+body.dark-mode .messages-page {
+    background: #101014;
+}
+
+
+body.dark-mode .messages-header {
+    background: #18181d;
+    border-bottom-color: #292930;
+}
+
+
+body.dark-mode .conversation-list {
+    background: #18181d;
+}
+
+
+body.dark-mode .conversation {
+    background: #18181d;
+    color: white;
+    border-bottom-color: #292930;
+}
+
+
+body.dark-mode .conversation:hover {
+    background: #25252c;
+}
+
+
+/* CHAT */
+
+body.dark-mode .chat-page {
+    background: #101014;
+}
+
+
+body.dark-mode .chat-header {
+    background: #18181d;
+    border-bottom-color: #292930;
+}
+
+
+body.dark-mode .chat-messages {
+    background: #101014;
+}
+
+
+body.dark-mode .received-message {
+    background: #25252c;
+    color: white;
+}
+
+
+body.dark-mode .chat-input-area {
+    background: #18181d;
+    border-top-color: #292930;
+}
+
+
+body.dark-mode .chat-input-area input {
+    background: #25252c;
+    color: white;
+    border-color: #444;
+}
+
+
+/* NOTIFICATIONS */
+
+body.dark-mode .notifications-page {
+    background: #101014;
+}
+
+
+body.dark-mode .notifications-header {
+    background: #18181d;
+    border-bottom-color: #292930;
+}
+
+
+body.dark-mode .notification-list {
+    background: #18181d;
+}
+
+
+body.dark-mode .notification {
+    background: #18181d;
+    color: white;
+    border-bottom-color: #292930;
+}
+
+
+/* PROFILE */
+
+body.dark-mode .profile-page {
+    background: #101014;
+}
+
+
+body.dark-mode .profile-header {
+    background: #18181d;
+    border-bottom-color: #292930;
+}
+
+
+body.dark-mode .profile-info {
+    background: #18181d;
+}
+
+
+body.dark-mode .profile-post-title {
+    background: #101014;
+}
+
+
+body.dark-mode .profile-post {
+    background: #18181d;
+    color: white;
+    border-bottom-color: #292930;
+}
+
+
+/* EDIT PROFILE */
+
+body.dark-mode .edit-profile-box {
+    background: #18181d;
+    color: white;
+}
+
+
+body.dark-mode .edit-profile-box input,
+body.dark-mode .edit-profile-box textarea {
+    background: #25252c;
+    color: white;
+    border-color: #444;
+}
+/* ================= STORIES ================= */
+
+.stories-section {
+
+    background: white;
+
+    padding: 18px;
+
+    margin-bottom: 15px;
+
+    border-radius: 18px;
+
+}
+
+
+.stories-title {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 15px;
+
+}
+
+
+.stories-title h3 {
+
+    font-size: 18px;
+
+}
+
+
+.stories-title span {
+
+    color: #833ab4;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+}
+
+
+.stories-container {
+
+    display: flex;
+
+    gap: 18px;
+
+    overflow-x: auto;
+
+    padding-bottom: 5px;
+
+}
+
+
+.stories-container::-webkit-scrollbar {
+
+    display: none;
+
+}
+
+
+.story {
+
+    min-width: 70px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+}
+
+
+.story-ring {
+
+    width: 65px;
+
+    height: 65px;
+
+    border-radius: 50%;
+
+    padding: 3px;
+
+    background: linear-gradient(
+        135deg,
+        #833ab4,
+        #fd1d1d,
+        #fcb045
+    );
+
+    margin: auto;
+
+}
+
+
+.story-avatar {
+
+    width: 100%;
+
+    height: 100%;
+
+    border-radius: 50%;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 25px;
+
+}
+
+
+.story span {
+
+    display: block;
+
+    margin-top: 6px;
+
+    font-size: 12px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+}
+
+
+/* DARK MODE */
+
+body.dark-mode .stories-section {
+
+    background: #18181d;
+
+}
+
+
+body.dark-mode .story-avatar {
+
+    background: #25252c;
+
+}
+/* ================= STORY VIEWER ================= */
+
+.story-viewer {
+backdrop-filter: blur(8px);
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: linear-gradient(
+        135deg,
+        #833ab4,
+        #fd1d1d,
+        #fcb045
+    );
+
+    z-index: 4000;
+
+    color: white;
+
+}
+
+
+.story-close {
+
+    position: absolute;
+
+    top: 20px;
+
+    right: 20px;
+
+    border: none;
+
+    background: rgba(0,0,0,.25);
+
+    color: white;
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 50%;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+}
+
+
+.story-progress {
+
+    position: absolute;
+
+    top: 10px;
+
+    left: 15px;
+
+    right: 15px;
+
+    height: 3px;
+
+    background: rgba(255,255,255,.4);
+
+}
+
+
+.story-progress div {
+
+    width: 70%;
+
+    height: 100%;
+
+    background: white;
+
+}
+
+
+.story-user {
+
+    position: absolute;
+
+    top: 30px;
+
+    left: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.story-viewer-avatar {
+
+    width: 38px;
+
+    height: 38px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+.story-content {
+
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 40px;
+
+}
+
+
+.story-content h1 {
+
+    font-size: 30px;
+
+    max-width: 500px;
+
+}
+.story-content img {
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.story-next {
+
+    position: absolute;
+
+    right: 20px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 45px;
+
+    height: 45px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background: rgba(0,0,0,.25);
+
+    color: white;
+
+    font-size: 35px;
+
+    cursor: pointer;
+
+}
+/* ================= STORY UPLOAD ================= */
+
+.story-upload-modal {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 5000;
+
+}
+
+
+.story-upload-box {
+
+    width: 90%;
+
+    max-width: 400px;
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 22px;
+
+    text-align: center;
+
+    position: relative;
+
+}
+
+
+.story-upload-box h2 {
+
+    margin-bottom: 7px;
+
+}
+
+
+.story-upload-box p {
+
+    color: #777;
+
+    font-size: 14px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.story-upload-close {
+
+    position: absolute;
+
+    top: 12px;
+
+    right: 15px;
+
+    border: none;
+
+    background: none;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+}
+
+
+.upload-image-btn {
+
+    display: block;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #833ab4,
+        #fd1d1d,
+        #fcb045
+    );
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+.upload-image-btn input {
+
+    display: none;
+
+}
+
+
+.story-preview {
+
+    width: 100%;
+
+    max-height: 300px;
+
+    object-fit: cover;
+
+    border-radius: 15px;
+
+    margin-top: 15px;
+
+    display: none;
+
+}
+
+
+.share-story-btn {
+
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #111;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    display: none;
+
+}
+
+
+/* DARK MODE */
+
+body.dark-mode .story-upload-box {
+
+    background: #18181d;
+
+    color: white;
+
+}
+
+
+body.dark-mode .story-upload-box p {
+
+    color: #aaa;
+
+}
+/* ================= MESSAGES ================= */
+
+.messages-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    width: 380px;
+    height: 100vh;
+
+    background: white;
+
+    z-index: 2000;
+
+    display: none;
+
+    box-shadow:
+        -10px 0 40px rgba(0,0,0,0.15);
+}
+
+
+.messages-header {
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid #eee;
+}
+
+
+.messages-header button {
+    border: none;
+    background: transparent;
+
+    font-size: 22px;
+
+    cursor: pointer;
+}
+
+
+.conversation {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 15px 20px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.conversation:hover {
+    background: #f5f5f5;
+}
+
+
+.chat-avatar {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(
+        135deg,
+        #833ab4,
+        #fd1d1d,
+        #fcb045
+    );
+
+    color: white;
+
+    font-weight: bold;
+}
+
+
+.conversation-info {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.conversation-info span {
+    color: #888;
+
+    font-size: 13px;
+}
+
+
+.online-dot {
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+}
+
+
+/* ================= CHAT ================= */
+
+.chat-screen {
+    position: fixed;
+
+    top: 0;
+    right: 0;
+
+    width: 420px;
+    height: 100vh;
+
+    background: white;
+
+    z-index: 2100;
+
+    display: none;
+
+    flex-direction: column;
+
+    box-shadow:
+        -10px 0 40px rgba(0,0,0,0.15);
+}
+
+
+.chat-header {
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid #eee;
+}
+
+
+.chat-header button {
+    border: none;
+
+    background: transparent;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+
+.chat-header div {
+    display: flex;
+    flex-direction: column;
+}
+
+
+#chatStatus {
+    font-size: 12px;
+
+    color: #22c55e;
+}
+
+
+.chat-messages {
+    flex: 1;
+
+    padding: 20px;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+.message {
+    max-width: 70%;
+
+    padding: 10px 15px;
+
+    border-radius: 18px;
+
+    font-size: 14px;
+}
+
+
+.message.received {
+    align-self: flex-start;
+
+    background: #f1f1f1;
+}
+
+
+.message.sent {
+    align-self: flex-end;
+
+    background: #833ab4;
+
+    color: white;
+}
+
+
+.message-input {
+    display: flex;
+
+    gap: 10px;
+
+    padding: 15px;
+
+    border-top: 1px solid #eee;
+}
+
+
+.message-input input {
+    flex: 1;
+
+    padding: 12px 15px;
+
+    border-radius: 25px;
+
+    border: 1px solid #ddd;
+
+    outline: none;
+}
+
+
+.message-input button {
+    width: 45px;
+    height: 45px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #833ab4;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+#messageBadge {
+    background: red;
+    color: white;
+    font-size: 10px;
+    border-radius: 50%;
+    padding: 3px 6px;
+    margin-left: 3px;
+}
+#messagesPanel {
+    display: none;
+}
+#chatScreen {
+    display: none;
+}
+.message {
+    padding: 10px 14px;
+    margin: 8px;
+    border-radius: 14px;
+    max-width: 70%;
+    word-wrap: break-word;
+    font-size: 14px;
+}
+
+.message.sent {
+    margin-left: auto;
+}
+
+.message.received {
+    margin-right: auto;
+}
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.message {
+    line-height: 1.4;
+    min-width: 40px;
+}
+.message-input {
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+    border-top: 1px solid #ddd;
+}
+
+.message-input input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    outline: none;
+    font-size: 14px;
+}
+
+.message-input input:focus {
+    border-color: #888;
+}
+
+.message-input button {
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+}
+.search-user {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.search-user:hover {
+    background: #f5f5f5;
+}
+
+.search-user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-user-info img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.search-user-info strong {
+    display: block;
+}
+
+.search-user-info small {
+    display: block;
+    color: gray;
+    margin-top: 3px;
+}
+.search-user {
+    transition: 0.2s;
+}
+
+.search-user:active {
+    transform: scale(0.98);
+}
+.notification-btn {
+    position: relative;
+}
+
+#notificationBadge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+
+    background: red;
+    color: white;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    min-width: 18px;
+    height: 18px;
+
+    border-radius: 50%;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 2px 5px;
+}
+    </style>
+</head>
+<body>
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                S
+            </div>
+
+            <h1>Socially</h1>
+
+        </div>
+
+        <p class="subtitle">
+            Connect. Share. Discover.
+        </p>
+
+
+        <!-- LOGIN FORM -->
+
+        <div class="input-group">
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+            >
+
+        </div>
+
+
+        <button
+            class="login-btn"
+            onclick="login()"
+        >
+            Login
+        </button>
+
+
+        <div
+            class="message"
+            id="message"
+        ></div>
+
+
+        <div class="divider">
+            Demo Account
+        </div>
+
+
+        <div class="demo-info">
+
+            Email:
+            <strong>bcrypttest@gmail.com</strong>
+
+            <br>
+
+            Password:
+            <strong>123456</strong>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+        © 2026 Socially • Your little social world
+    </div>
+
+</div>
+
+
+<script>
+
+const API = "http://localhost:5000";
+
+async function login() {
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value.trim();
+
+    const message =
+        document.getElementById("message");
+
+    if (!email || !password) {
+        message.innerText =
+            "Please enter email and password.";
+
+        message.style.color = "red";
+        return;
+    }
+
+    try {
+
+        message.innerText = "Logging in...";
+        message.style.color = "#777";
+
+        const response = await fetch(
+            `${API}/login`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        //console.log("Login response:", data);
+
+        if (response.ok) {
+
+            localStorage.setItem(
+                "token",
+                data.token
+            );
+
+            localStorage.setItem(
+                "user",
+                JSON.stringify(data.user)
+            );
+
+            message.innerText =
+                "Login successful! 🎉";
+
+            message.style.color = "green";
+
+            setTimeout(function() {
+
+                document.querySelector(
+                    ".auth-container"
+                ).style.display = "none";
+
+                document.getElementById(
+                    "feedPage"
+                ).style.display = "block";
+
+                document.getElementById(
+                    "welcomeUser"
+                ).innerText =
+                    `Welcome ${data.user.name || "User"} 👋`;
+
+                loadPosts();
+
+            }, 500);
+
+        } else {
+
+            message.innerText =
+                data.message || "Login failed.";
+
+            message.style.color = "red";
+        }
+
+    } catch (error) {
+
+        console.log("Login error:", error);
+
+        message.innerText =
+            "Cannot connect to server.";
+
+        message.style.color = "red";
+    }
+}
+
+
+            
+
+async function loadPosts() {
+
+    try {
+
+        const response =
+            await fetch(`${API}/posts`);
+
+        const posts =
+            await response.json();
+
+        const postsContainer =
+            document.getElementById("posts");
+
+        postsContainer.innerHTML = "";
+
+        for (const post of posts) {
+
+            const postDiv =
+                document.createElement("div");
+
+            postDiv.className = "post";
+
+            postDiv.dataset.id =
+                post._id;
+
+            postDiv.innerHTML = `
+
+                <div class="post-header">
+
+                    <strong>
+                        ${post.userName || post.user || "User"}
+                    </strong>
+
+                </div>
+
+                <div class="post-content">
+                    ${post.content}
+                </div>
+
+                <div class="post-actions">
+
+                    <button
+    id="like-${post._id}"
+    onclick="likePost('${post._id}')"
+>
+    ❤️ ${post.likes || 0}
+</button>
+
+                    <button
+                        onclick="openCommentBox(this)"
+                    >
+                        💬 Comment
+                    </button>
+
+                </div>
+
+            `;
+
+            const commentResponse =
+                await fetch(
+                    `${API}/posts/${post._id}/comments`
+                );
+
+            const comments =
+                await commentResponse.json();
+
+     
+comments.forEach(comment => {
+
+    const commentBox = document.createElement("div");
+    commentBox.className = "comment";
+
+    commentBox.innerHTML = `
+        <span>
+            <strong>${comment.user}</strong>:
+            ${comment.content}
+        </span>
+    `;
+
+    const currentUser = getCurrentUser();
+
+    if (
+        currentUser &&
+        comment.userEmail === currentUser.email
+    ) {
+        const deleteButton = document.createElement("button");
+
+        deleteButton.innerText = "🗑️";
+        deleteButton.className = "delete-comment-btn";
+
+        deleteButton.onclick = () =>
+            deleteComment(comment._id);
+
+        commentBox.appendChild(deleteButton);
+    }
+
+    commentsList.appendChild(commentBox);
+});
+            postsContainer.appendChild(
+                postDiv
+            );
+        }
+
+    } catch (error) {
+
+        console.log(
+            "Load posts error:",
+            error
+        );
+
+    }
+}
+
+async function likePost(postId) {
+    const user = getCurrentUser();
+
+    if (!user) {
+        alert("Please login first.");
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `${API}/posts/${postId}/like`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify({
+                    email: user.email
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Unable to like post.");
+            return;
+        }
+
+        loadPosts();
+
+    } catch (error) {
+        console.log("Like error:", error);
+        alert("Something went wrong while liking the post.");
+    }
+}
+
+function openStoryModal() {
+
+    document.getElementById("storyModal").style.display =
+        "flex";
+}
+
+
+
+function closeStoryModal() {
+
+    document.getElementById("storyModal").style.display =
+        "none";
+
+}
+
+
+function createStory() {
+
+    const storyText =
+        document.getElementById("storyText").value.trim();
+
+    if (!storyText) {
+
+        alert("Please write something first.");
+
+        return;
+    }
+
+
+    const storiesContainer =
+        document.querySelector(".stories");
+
+
+    const story = document.createElement("div");
+
+    story.className = "story";
+
+
+    story.innerHTML = `
+
+    <div
+        class="story-circle"
+        onclick="openStoryViewer('My Story', '${storyText}')"
+    >
+        😊
+    </div>
+
+    <p>My Story</p>
+
+`;
+
+
+    storiesContainer.appendChild(story);
+
+
+    document.getElementById("storyText").value = "";
+
+    closeStoryModal();
+
+}
+function openStoryViewer(user, text) {
+
+    document.getElementById("storyViewerUser").innerText =
+        user;
+
+    document.getElementById("storyViewerText").innerText =
+        text;
+
+    document.getElementById("storyViewer").style.display =
+        "flex";
+
+}
+
+
+function closeStoryViewer() {
+
+    document.getElementById("storyViewer").style.display =
+        "none";
+
+}
+function openMessages() {
+
+    document.getElementById("messagesPage").style.display =
+        "block";
+
+}
+
+
+function closeMessages() {
+
+    document.getElementById("messagesPage").style.display =
+        "none";
+
+}
+
+
+function openChat(username) {
+
+    const messagesPanel =
+        document.getElementById("messagesPanel");
+
+    const chatScreen =
+        document.getElementById("chatScreen");
+
+    const chatUserName =
+        document.getElementById("chatUserName");
+
+    const chatMessages =
+        document.getElementById("chatMessages");
+
+    messagesPanel.style.display = "none";
+
+    chatScreen.style.display = "flex";
+
+    chatUserName.innerText = username;
+
+    chatMessages.innerHTML = "";
+
+    if (!chatData[username]) {
+        chatData[username] = [];
+    }
+
+    chatData[username].forEach(message => {
+
+        const messageDiv =
+            document.createElement("div");
+
+        messageDiv.className =
+            `message ${message.type}`;
+
+        messageDiv.innerText =
+            message.text;
+
+        chatMessages.appendChild(messageDiv);
+    });
+
+    chatMessages.scrollTop =
+        chatMessages.scrollHeight;
+}
+function closeChat() {
+
+    document.getElementById("chatPage").style.display =
+        "none";
+
+    document.getElementById("messagesPage").style.display =
+        "block";
+
+}
+
+const chatData = {
+
+    Alex: [
+        {
+            type: "received",
+            text: "Hey! 👋"
+        },
+        {
+            type: "sent",
+            text: "Hey! How are you?"
+        }
+    ],
+
+    Rahul: [
+        {
+            type: "received",
+            text: "Let's meet tomorrow!"
+        }
+    ],
+
+    Priya: [
+        {
+            type: "received",
+            text: "Nice post 🔥"
+        }
+    ]
+
+};
+const savedChats = localStorage.getItem("chatData");
+
+if (savedChats) {
+    Object.assign(chatData, JSON.parse(savedChats));
+}
+
+function sendMessage() {
+
+    const input =
+        document.getElementById("messageInput");
+
+    const message =
+        input.value.trim();
+
+    if (message === "") {
+        return;
+    }
+
+
+    const username =
+        document.getElementById("chatUserName").innerText;
+
+
+    if (!chatData[username]) {
+        chatData[username] = [];
+    }
+
+
+    chatData[username].push({
+        type: "sent",
+        text: message
+    });
+
+
+    localStorage.setItem(
+        "chatData",
+        JSON.stringify(chatData)
+    );
+
+
+    const chatMessages =
+        document.getElementById("chatMessages");
+
+
+    const messageDiv =
+        document.createElement("div");
+
+
+    messageDiv.className =
+        "message sent";
+
+
+    messageDiv.innerText =
+        message;
+
+
+    chatMessages.appendChild(messageDiv);
+
+
+    input.value = "";
+
+
+    chatMessages.scrollTop =
+        chatMessages.scrollHeight;
+}
+
+
+function clearChat() {
+
+    const username =
+        document.getElementById("chatUserName").innerText;
+
+
+    chatData[username] = [];
+
+
+    localStorage.setItem(
+        "chatData",
+        JSON.stringify(chatData)
+    );
+
+
+    document.getElementById(
+        "chatMessages"
+    ).innerHTML = "";
+}
+
+
+function handleMessageKey(event) {
+
+    if (event.key === "Enter") {
+
+        sendMessage();
+
+    }
+
+}
+function clearChat() {
+
+    const username =
+        document.getElementById("chatUserName").innerText;
+
+    chatData[username] = [];
+
+    localStorage.setItem(
+        "chatData",
+        JSON.stringify(chatData)
+    );
+
+    document.getElementById("chatMessages").innerHTML = "";
+
+}
+
+
+
+function handleMessageKey(event) {
+
+    if (event.key === "Enter") {
+
+        sendMessage();
+
+    }
+
+
+
+
+}
+function openSearch(){
+
+
+    document.getElementById("searchPage").style.display="block";
+
+}
+
+function closeSearch(){
+
+    document.getElementById("searchPage").style.display="none";
+
+}
+async function searchUsers() {
+
+    const input = document.getElementById("searchInput");
+    const results = document.getElementById("searchResults");
+
+    const query = input.value.trim();
+
+    if (!query) {
+        results.innerHTML = "";
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API}/search/users?q=${encodeURIComponent(query)}`
+        );
+
+        const users = await response.json();
+
+        results.innerHTML = "";
+
+        if (!users.length) {
+            results.innerHTML = "<p>No users found.</p>";
+            return;
+        }
+
+        users.forEach(user => {
+
+            const userDiv = document.createElement("div");
+
+            userDiv.className = "search-user";
+userDiv.setAttribute("title", "View profile");
+           userDiv.innerHTML = `
+    <div class="search-user-info">
+
+        <img
+            src="${user.profileImage || 'https://via.placeholder.com/45'}"
+            alt="Profile"
+        >
+
+        <div>
+            <strong>${user.name}</strong>
+            <small>${user.email}</small>
+        </div>
+
+    </div>
+`;
+
+userDiv.onclick = function () {
+    openUserProfile(user.email);
+};
+
+            results.appendChild(userDiv);
+
+        });
+
+    } catch (error) {
+
+        console.log("Search error:", error);
+
+    }
+}
+function clearSearch() {
+
+    document.getElementById("searchInput").value = "";
+
+    document.getElementById("searchResults").innerHTML = "";
+
+}
+async function openUserProfile(email) {
+
+    try {
+
+        const response = await fetch(
+            `${API}/profile/${encodeURIComponent(email)}`
+        );
+
+        const profile = await response.json();
+
+        if (!response.ok) {
+            alert(profile.message || "Profile not found.");
+            return;
+        }
+
+        // Search page close
+        document.getElementById("searchPage").style.display = "none";
+
+        // Profile page open
+        document.getElementById("profilePage").style.display = "block";
+
+        document.getElementById("profileName").innerText =
+            profile.name || "User";
+
+        document.getElementById("profileEmail").innerText =
+            profile.email || "";
+
+        document.querySelector(".profile-bio").innerText =
+            profile.bio || "✨ Living my little social life";
+
+        document.querySelector(".profile-stats").innerHTML = `
+            <div>
+                <strong>${profile.postCount || 0}</strong>
+                <span>Posts</span>
+            </div>
+
+            <div>
+                <strong>${(profile.followers || []).length}</strong>
+                <span>Followers</span>
+            </div>
+
+            <div>
+                <strong>${(profile.following || []).length}</strong>
+                <span>Following</span>
+            </div>
+        `;
+        const currentUser = getCurrentUser();
+const followButton =
+    document.getElementById("followButton");
+
+if (followButton) {
+
+    if (!currentUser || currentUser.email === profile.email) {
+        followButton.style.display = "none";
+    } else {
+        followButton.style.display = "inline-block";
+
+        const isFollowing =
+            (profile.followers || []).includes(currentUser.email);
+
+        followButton.innerText =
+            isFollowing ? "Following" : "Follow";
+    }
+}
+const postsResponse = await fetch(
+    `${API}/posts/user/${encodeURIComponent(profile.email)}`
+);
+
+const myPosts = await postsResponse.json();
+
+const profilePosts =
+    document.getElementById("profilePosts");
+
+profilePosts.innerHTML = "";
+
+if (!myPosts.length) {
+
+    profilePosts.innerHTML =
+        `<div class="profile-post">No posts yet.</div>`;
+
+} else {
+
+    myPosts.forEach(post => {
+
+        const item = document.createElement("div");
+
+        item.className = "profile-post";
+
+        item.innerText = post.content;
+
+        profilePosts.appendChild(item);
+
+    });
+}
+    } catch (error) {
+
+        console.log("Open user profile error:", error);
+
+    }
+}
+function backToSearch() {
+
+    document.getElementById("profilePage").style.display = "none";
+
+    document.getElementById("searchPage").style.display = "block";
+
+}
+
+async function openNotifications() {
+
+    document.getElementById("notificationsPage").style.display =
+        "block";
+const badge = document.getElementById("notificationBadge");
+
+if (badge) {
+    badge.style.display = "none";
+}
+    const user = getCurrentUser();
+
+    if (!user || !user.email) {
+        return;
+    }
+
+    const list = document.querySelector(".notification-list");
+
+    try {
+
+        const response = await fetch(
+            `${API}/notifications/${encodeURIComponent(user.email)}`
+        );
+
+        const notifications = await response.json();
+if (response.ok) {
+    await fetch(
+        `${API}/notifications/read/${encodeURIComponent(user.email)}`,
+        {
+            method: "PUT"
+        }
+    );
+}
+        if (!response.ok) {
+            list.innerHTML = `
+                <div class="notification">
+                    <div class="notification-text">
+                        Unable to load notifications.
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        list.innerHTML = "";
+
+        if (notifications.length === 0) {
+
+            list.innerHTML = `
+                <div class="notification">
+                    <div class="notification-text">
+                        <strong>No notifications yet 🔔</strong>
+                    </div>
+                </div>
+            `;
+
+            return;
+        }
+
+        notifications.forEach(notification => {
+
+            const item = document.createElement("div");
+
+            item.className = "notification";
+
+            item.innerHTML = `
+                <div class="notification-avatar">
+                    👤
+                </div>
+
+                <div class="notification-text">
+                    <strong>${notification.senderName}</strong>
+                    ${notification.message}
+                    <small>
+                        ${new Date(notification.createdAt).toLocaleString()}
+                    </small>
+                </div>
+            `;
+
+            list.appendChild(item);
+        });
+
+    } catch (error) {
+
+        console.log("Notification loading error:", error);
+
+        list.innerHTML = `
+            <div class="notification">
+                <div class="notification-text">
+                    Something went wrong while loading notifications.
+                </div>
+            </div>
+        `;
+    }
+}
+updateNotificationBadge();
+setInterval(updateNotificationBadge, 10000);
+   async function updateNotificationBadge() {
+    const user = getCurrentUser();
+    const badge = document.getElementById("notificationBadge");
+
+    if (!user || !user.email || !badge) {
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `${API}/notifications/${encodeURIComponent(user.email)}`
+        );
+
+        const notifications = await response.json();
+
+        if (!response.ok) {
+            badge.style.display = "none";
+            return;
+        }
+
+        const unreadCount = notifications.filter(
+            notification => notification.read === false
+        ).length;
+
+        if (unreadCount > 0) {
+            badge.innerText = unreadCount;
+            badge.style.display = "flex";
+        } else {
+            badge.style.display = "none";
+        }
+
+    } catch (error) {
+        console.log("Notification badge error:", error);
+    }
+}
+function closeNotifications() {
+
+    document.getElementById("notificationsPage").style.display =
+        "none";
+
+}
+function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    document.getElementById("feedPage").style.display = "none";
+    document.getElementById("profilePage").style.display = "none";
+    document.getElementById("searchPage").style.display = "none";
+    document.getElementById("notificationsPage").style.display = "none";
+
+    const authContainer =
+        document.querySelector(".auth-container");
+
+    if (authContainer) {
+        authContainer.style.display = "flex";
+    }
+
+    const emailInput =
+        document.getElementById("email");
+
+    const passwordInput =
+        document.getElementById("password");
+
+    if (emailInput) {
+        emailInput.value = "";
+    }
+
+    if (passwordInput) {
+        passwordInput.value = "";
+    }
+
+    const message =
+        document.getElementById("message");
+
+    if (message) {
+        message.innerText = "";
+    }
+}
+async function openProfile() {
+    const user = getCurrentUser();
+
+    if (!user || !user.email) {
+        alert("Please login first.");
+        return;
+    }
+
+    document.getElementById("profilePage").style.display = "block";
+
+    try {
+        const response = await fetch(
+            `${API}/profile/${encodeURIComponent(user.email)}`
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Unable to load profile.");
+            return;
+        }
+
+        document.getElementById("profileName").innerText =
+            data.name || "User";
+
+        document.getElementById("profileEmail").innerText =
+            data.email || user.email;
+
+        document.querySelector(".profile-bio").innerText =
+            data.bio || "✨ Living my little social life";
+
+        document.getElementById("followersCount").innerText =
+            (data.followers || []).length;
+
+        document.getElementById("followingCount").innerText =
+            (data.following || []).length;
+
+        const postCount =
+            document.getElementById("postCount");
+
+        if (postCount) {
+            postCount.innerText =
+                data.postCount || 0;
+        }
+
+        const followButton =
+            document.getElementById("followButton");
+
+        if (followButton) {
+            followButton.style.display = "none";
+        }
+
+    } catch (error) {
+        console.log("Profile loading error:", error);
+        alert("Something went wrong while loading profile.");
+    }
+}
+function closeProfile() {
+
+    document.getElementById("profilePage").style.display =
+        "none";
+
+}
+
+
+
+function editProfile() {
+
+    const user = getCurrentUser();
+
+    if (!user || !user.email) {
+        alert("Please login first.");
+        return;
+    }
+
+    document.getElementById("editName").value =
+        user.name || "";
+
+    document.getElementById("editBio").value =
+    document.querySelector(".profile-bio").innerText
+    .replace("✨ Living my little social life", "")
+    .trim();
+
+    document.getElementById("editProfileModal").style.display =
+        "flex";
+}
+
+function closeEditProfile() {
+
+    document.getElementById("editProfileModal").style.display =
+        "none";
+
+}
+
+
+
+async function saveProfile() {
+
+    const name =
+        document.getElementById("editName").value.trim();
+
+    const bio =
+        document.getElementById("editBio").value.trim();
+
+    if (!name) {
+        alert("Please enter your name.");
+        return;
+    }
+
+    const userData =
+        localStorage.getItem("user");
+
+    if (!userData) {
+        alert("Please login first.");
+        return;
+    }
+
+    const user =
+        JSON.parse(userData);
+
+    try {
+
+        const response =
+            await fetch(`${API}/profile/${user.email}`, {
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization":
+                        `Bearer ${localStorage.getItem("token")}`
+                },
+
+                body: JSON.stringify({
+                    name: name,
+                    bio: bio
+                })
+            });
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Profile update failed.");
+            return;
+        }
+
+        /* Update local user data */
+        try {
+
+    const response = await fetch(
+        `${API}/profile/${user.email}`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization":
+                    `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify({
+                name: name,
+                bio: bio
+            })
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        alert(data.message || "Unable to update profile.");
+        return;
+    }
+
+    // Update local user data
+    user.name = data.user.name;
+    localStorage.setItem("user", JSON.stringify(user));
+
+    // Update profile screen
+    document.getElementById("profileName").innerText =
+        data.user.name;
+
+    document.querySelector(".profile-bio").innerText =
+        data.user.bio || "✨ Living my little social life";
+
+    closeEditProfile();
+
+    alert("Profile updated successfully! 🎉");
+
+} catch (error) {
+
+    console.log("Profile update error:", error);
+
+    alert("Something went wrong while updating profile.");
+}
+
+        /* Update profile screen */
+        document.getElementById(
+            "profileName"
+        ).innerText = name;
+
+        document.querySelector(
+            ".profile-bio"
+        ).innerText =
+            bio || "✨ Living my little social life";
+
+        closeEditProfile();
+
+        alert("Profile updated successfully! 🎉");
+
+    } catch (error) {
+
+        console.log(
+            "Profile update error:",
+            error
+        );
+
+        alert(
+            "Something went wrong while updating profile."
+        );
+    }
+}
+/* ================= DARK MODE ================= */
+
+function toggleDarkMode() {
+
+    document.body.classList.toggle("dark-mode");
+
+
+    const isDark =
+        document.body.classList.contains("dark-mode");
+
+
+    localStorage.setItem(
+        "darkMode",
+        isDark
+    );
+
+
+    const button =
+        document.getElementById("themeButton");
+
+
+    if (isDark) {
+
+        button.innerText = "☀️";
+
+    } else {
+
+        button.innerText = "🌙";
+
+    }
+
+}
+/* ================= LOAD THEME ================= */
+
+function loadTheme() {
+
+    const darkMode =
+        localStorage.getItem("darkMode");
+
+
+    const button =
+        document.getElementById("themeButton");
+
+
+    if (darkMode === "true") {
+
+        document.body.classList.add("dark-mode");
+
+        if (button) {
+            button.innerText = "☀️";
+        }
+
+    }
+
+}
+
+
+loadTheme();
+/* ================= STORIES ================= */
+
+let currentStory = 0;
+
+
+const stories = [
+
+    {
+        name: "Ankit",
+        text: "Hey! Welcome to my story 👋"
+    },
+
+    {
+        name: "Saijal",
+        text: "Having a great day! ✨"
+    },
+
+    {
+        name: "Rahul",
+        text: "Coding mode ON 💻🔥"
+    },
+
+    {
+        name: "Priya",
+        text: "Beautiful day 🌸"
+    }
+
+];
+
+
+function openStory(userName) {
+
+    if (userName === "Your Story") {
+
+        alert("Story upload feature coming next! 📸");
+
+        return;
+
+    }
+
+
+    currentStory =
+        stories.findIndex(
+            story => story.name === userName
+        );
+
+
+    if (currentStory < 0) {
+
+        currentStory = 0;
+
+    }
+
+
+    showCurrentStory();
+
+
+    document.getElementById("storyViewer").style.display =
+        "block";
+
+}
+
+
+function showCurrentStory() {
+
+    const story =
+        stories[currentStory];
+
+
+    document.getElementById("storyUserName").innerText =
+        story.name;
+
+
+    document.getElementById("storyText").innerText =
+        story.text;
+
+}
+
+
+function nextStory() {
+
+    currentStory++;
+
+
+    if (currentStory >= stories.length) {
+
+        currentStory = 0;
+
+    }
+
+
+    showCurrentStory();
+
+}
+
+
+function closeStory() {
+
+    document.getElementById("storyViewer").style.display =
+        "none";
+
+}
+/* ================= STORY UPLOAD ================= */
+
+let selectedStoryImage = null;
+
+
+function openStoryUpload() {
+
+    document.getElementById(
+        "storyUploadModal"
+    ).style.display = "flex";
+
+}
+function openMyStory() {
+
+    const storyImage =
+        localStorage.getItem("myStoryImage");
+
+    if (!storyImage) {
+
+        openStoryUpload();
+
+        return;
+    }
+
+    const viewer =
+        document.getElementById("storyViewer");
+
+    const storyText =
+        document.getElementById("storyText");
+
+    const storyName =
+        document.getElementById("storyUserName");
+
+
+    storyName.innerText = "Your Story";
+
+    storyText.innerHTML = `
+        <img
+            src="${storyImage}"
+            style="
+                max-width: 90vw;
+                max-height: 80vh;
+                object-fit: contain;
+                border-radius: 18px;
+            "
+        >
+    `;
+
+    viewer.style.display = "block";
+}
+
+
+function closeStoryUpload() {
+
+    document.getElementById(
+        "storyUploadModal"
+    ).style.display = "none";
+
+}
+
+
+function previewStoryImage(event) {
+
+    const file =
+        event.target.files[0];
+
+
+    if (!file) {
+
+        return;
+
+    }
+
+
+    selectedStoryImage = file;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload = function(e) {
+
+        const preview =
+            document.getElementById(
+                "storyPreview"
+            );
+
+
+        preview.src =
+            e.target.result;
+
+
+        preview.style.display =
+            "block";
+
+
+        document.getElementById(
+            "shareStoryBtn"
+        ).style.display =
+            "block";
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+}
+
+
+function shareStory() {
+
+    if (!selectedStoryImage) {
+
+        alert("Please choose an image first.");
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload = function(e) {
+
+        localStorage.setItem(
+            "myStoryImage",
+            e.target.result
+        );
+
+
+        closeStoryUpload();
+
+
+        alert(
+            "Your story has been added! 🎉"
+        );
+
+
+        showMyStory();
+
+    };
+
+
+    reader.readAsDataURL(
+        selectedStoryImage
+    );
+
+}
+function showMyStory() {
+
+    const storyImage =
+        localStorage.getItem(
+            "myStoryImage"
+        );
+
+
+    if (!storyImage) {
+
+        return;
+
+    }
+
+
+    const yourStory =
+        document.querySelector(
+            ".story"
+        );
+
+
+    if (!yourStory) {
+
+        return;
+
+    }
+
+
+    const avatar =
+        yourStory.querySelector(
+            ".story-avatar"
+        );
+
+
+    if (!avatar) {
+
+        return;
+
+    }
+
+
+    avatar.innerHTML = "";
+
+
+    avatar.style.backgroundImage =
+        `url(${storyImage})`;
+
+
+    avatar.style.backgroundSize =
+        "cover";
+
+
+    avatar.style.backgroundPosition =
+        "center";
+
+}
+showMyStory();
+// ================= MESSAGES =================
+function openMessages() {
+
+    const messagesPanel =
+        document.getElementById("messagesPanel");
+
+    const chatScreen =
+        document.getElementById("chatScreen");
+
+    chatScreen.style.display = "none";
+
+    messagesPanel.style.display = "block";
+    document.getElementById("messageBadge").innerText = "0";
+}
+
+
+function closeMessages() {
+
+    document.getElementById("messagesPanel")
+        .style.display = "none";
+}
+
+
+function openChat(username) {
+
+    const messagesPanel =
+        document.getElementById("messagesPanel");
+
+    const chatScreen =
+        document.getElementById("chatScreen");
+
+    const chatUserName =
+        document.getElementById("chatUserName");
+
+    const chatMessages =
+        document.getElementById("chatMessages");
+
+    messagesPanel.style.display = "none";
+
+    chatScreen.style.display = "flex";
+
+    chatUserName.innerText = username;
+
+    chatMessages.innerHTML = "";
+
+    if (!chatData[username]) {
+        chatData[username] = [];
+    }
+
+    chatData[username].forEach(message => {
+
+        const messageDiv =
+            document.createElement("div");
+
+        messageDiv.className =
+            `message ${message.type}`;
+
+        messageDiv.innerText =
+            message.text;
+
+        chatMessages.appendChild(messageDiv);
+    });
+
+    chatMessages.scrollTop =
+        chatMessages.scrollHeight;
+}
+
+   
+function backToMessages() {
+
+    document.getElementById("chatScreen")
+        .style.display = "none";
+
+    document.getElementById("messagesPanel")
+        .style.display = "block";
+
+}
+
+
+function sendMessage() {
+
+    const input =
+        document.getElementById("messageInput");
+
+    const message =
+        input.value.trim();
+
+    if (message === "") {
+        return;
+    }
+const username =
+    document.getElementById("chatUserName").innerText;
+
+
+if (!chatData[username]) {
+
+    chatData[username] = [];
+
+}
+
+
+chatData[username].push({
+
+    type: "sent",
+
+    text: message
+
+});
+localStorage.setItem(
+    "chatData",
+    JSON.stringify(chatData)
+);
+
+    const chatMessages =
+        document.getElementById("chatMessages");
+
+
+    const messageDiv =
+        document.createElement("div");
+
+
+    messageDiv.className =
+        "message sent";
+
+
+   const time = new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+});
+
+messageDiv.innerText =
+    message + "  " + time;
+    chatMessages.appendChild(messageDiv);
+const conversations =
+    document.querySelectorAll(".conversation");
+
+conversations.forEach(conversation => {
+
+    const name =
+        conversation.querySelector("strong");
+
+    if (name && name.innerText === username) {
+
+        const preview =
+            conversation.querySelector("span");
+
+        if (preview) {
+            preview.innerText = message;
+        }
+    }
+});
+
+    input.value = "";
+    
+let badge =
+    document.getElementById("messageBadge");
+
+let count =
+    parseInt(badge.innerText);
+
+badge.innerText = count + 1;
+
+    chatMessages.scrollTop =
+        chatMessages.scrollHeight;
+
+}
+function showCreatePost() {
+
+    const createBox = document.getElementById("createPostBox");
+
+    createBox.classList.toggle("hidden");
+}
+async function createPost() {
+
+    const content =
+        document.getElementById("postContent").value.trim();
+
+    if (content === "") {
+        alert("Please write something!");
+        return;
+    }
+
+    const user = getCurrentUser();
+
+    if (!user || !user.email) {
+        alert("Please login first.");
+        return;
+    }
+
+    try {
+
+        const response = await fetch(API + "/posts", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+    user: user.name,
+    content: content,
+    ownerEmail: user.email
+})
+
+        });
+
+        const data = await response.json();
+
+        console.log("POST RESPONSE:", data);
+
+        if (!response.ok) {
+
+            alert(
+                "Post Error:\n" +
+                JSON.stringify(data, null, 2)
+            );
+
+            return;
+        }
+
+        document.getElementById("postContent").value = "";
+
+        document
+            .getElementById("createPostBox")
+            .classList.add("hidden");
+
+        loadPosts();
+
+    } catch (error) {
+
+        console.log("CREATE POST ERROR:", error);
+
+        alert(
+            "Error:\n" +
+            error.message
+        );
+    }
+}
+function openCommentBox(button) {
+
+    const commentBox = document.createElement("div");
+
+    commentBox.innerHTML = `
+        <input
+            type="text"
+            placeholder="Write a comment..."
+            class="commentInput"
+        >
+
+        <button onclick="submitComment(this)">
+            Send
+        </button>
+    `;
+
+    button.parentElement.appendChild(commentBox);
+}
+
+
+async function submitComment(button) {
+    const input =
+        button.parentElement.querySelector(".commentInput");
+
+    const comment = input.value.trim();
+
+    if (comment === "") {
+        return;
+    }
+
+    const postId =
+        button.closest(".post").dataset.id;
+
+    const user = getCurrentUser();
+
+    if (!user || !user.email) {
+        alert("Please login first.");
+        return;
+    }
+
+    try {
+        const response = await fetch(API + "/comments", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                postId: postId,
+                user: user.name,
+                userEmail: user.email,
+                content: comment
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            console.log("Comment error:", data);
+            alert(data.message || "Unable to add comment.");
+            return;
+        }
+
+        input.value = "";
+
+        loadPosts();
+
+    } catch (error) {
+        console.log("Comment error:", error);
+        alert("Something went wrong while adding comment.");
+    }
+}
+    
+async function deleteComment(commentId) {
+
+    const user = getCurrentUser();
+
+    if (!user) {
+        alert("Please login first.");
+        return;
+    }
+
+    if (!confirm("Delete this comment?")) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API}/comments/${commentId}`,
+            {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization":
+                        `Bearer ${localStorage.getItem("token") || ""}`
+                },
+                body: JSON.stringify({
+                    userEmail: user.email
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Unable to delete comment.");
+            return;
+        }
+
+        await loadPosts();
+
+    } catch (error) {
+        console.log("Delete comment error:", error);
+    }
+}
+       
+
+
+async function followUser() {
+const user = JSON.parse(localStorage.getItem("user") || "null");
+    if (!user || !user.email) {
+        console.log("User not logged in");
+        return;
+    }
+
+    const followingEmail = prompt(
+        "Enter the email of the user you want to follow:"
+    );
+
+    if (!followingEmail) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(API + "/follow", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                followerEmail: user.email,
+                followingEmail: followingEmail
+            })
+
+        });
+
+        const data = await response.json();
+
+        console.log("Follow response:", data);
+
+        if (!response.ok) {
+            console.log("Follow error:", data.message);
+            return;
+        }
+
+        const button =
+            document.querySelector(".follow-btn");
+
+        if (button) {
+            button.innerText = "Following";
+        }
+
+    } catch (error) {
+
+        console.log("Follow error:", error);
+
+    }
+}
+updateNotificationBadge();
+async function followCurrentProfile() {
+    const currentUser = getCurrentUser();
+
+    if (!currentUser || !currentUser.email) {
+        alert("Please login first.");
+        return;
+    }
+
+    const profileEmail =
+        document.getElementById("profileEmail").innerText.trim();
+
+    if (!profileEmail || profileEmail === currentUser.email) {
+        return;
+    }
+
+    try {
+        const response = await fetch(API + "/follow", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify({
+                followerEmail: currentUser.email,
+                followingEmail: profileEmail
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Unable to update follow status.");
+            return;
+        }
+
+        const button =
+            document.getElementById("followButton");
+
+        if (button) {
+            button.innerText =
+                data.following ? "Following" : "Follow";
+        }
+
+        // Reload profile to update follower/following counts
+        openProfile();
+
+    } catch (error) {
+        console.log("Follow error:", error);
+        alert("Something went wrong while updating follow status.");
+    }
+}
+</script>
+<!-- ================= FEED PAGE ================= -->
+
+<div id="feedPage" class="hidden">
+
+    <header class="topbar">
+
+    <div class="logo-area">
+
+        <h1>Socially</h1>
+
+    </div>
+
+
+    <div class="top-icons">
+
+        <button onclick="openSearch()">
+            🔍
+        </button>
+
+
+        <button onclick="openNotifications()">
+            ❤️
+             <span id="notificationBadge">0</span>
+        </button>
+
+
+        <button onclick="openMessages()">
+            💬
+            <span id="messageBadge">0</span>
+        </button>
+<button
+    id="themeButton"
+    onclick="toggleDarkMode()"
+>
+    🌙
+</button>
+        <button
+    class="profile-btn"
+    onclick="openProfile()"
+>
+    👤
+</button>
+    </div>
+
+</header>
+
+    <main class="feed-container">
+<!-- ================= STORIES ================= -->
+
+<div class="stories-section">
+
+    <div class="stories-title">
+
+        <h3>Stories</h3>
+
+        <span>See all</span>
+
+    </div>
+
+
+    <div class="stories-container">
+
+        <!-- YOUR STORY -->
+
+        <div
+    class="story"
+    onclick="openMyStory()"
+>
+
+
+            <div class="story-ring">
+
+                <div class="story-avatar">
+                    ➕
+                </div>
+
+            </div>
+
+            <span>Your Story</span>
+
+        </div>
+
+
+        <!-- ANKIT -->
+
+        <div
+            class="story"
+            onclick="openStory('Ankit')"
+        >
+
+            <div class="story-ring">
+
+                <div class="story-avatar">
+                    👨🏻
+                </div>
+
+            </div>
+
+            <span>Ankit</span>
+
+        </div>
+
+
+        <!-- SAIJAL -->
+
+        <div
+            class="story"
+            onclick="openStory('Saijal')"
+        >
+
+            <div class="story-ring">
+
+                <div class="story-avatar">
+                    👩🏻
+                </div>
+
+            </div>
+
+            <span>Saijal</span>
+
+        </div>
+
+
+        <!-- RAHUL -->
+
+        <div
+            class="story"
+            onclick="openStory('Rahul')"
+        >
+
+            <div class="story-ring">
+
+                <div class="story-avatar">
+                    👨🏻
+                </div>
+
+            </div>
+
+            <span>Rahul</span>
+
+        </div>
+
+
+        <!-- PRIYA -->
+
+        <div
+            class="story"
+            onclick="openStory('Priya')"
+        >
+
+            <div class="story-ring">
+
+                <div class="story-avatar">
+                    👩🏻
+                </div>
+
+            </div>
+
+            <span>Priya</span>
+
+        </div>
+
+
+    </div>
+
+</div>
+        <div class="welcome">
+
+            <h2 id="welcomeUser">
+                Welcome 👋
+            </h2>
+
+            <p>
+                What's happening today?
+            </p>
+
+        </div>
+
+
+          
+        
+
+        
+
+
+       
+
+            
+
+        <!-- CREATE POST -->
+
+        <div
+            id="createPostBox"
+            class="create-box hidden"
+        >
+
+            <h3>Create Post</h3>
+
+            <textarea
+                id="postContent"
+                placeholder="Share something with the world..."
+            ></textarea>
+
+            <button onclick="createPost()">
+                Post
+            </button>
+
+        </div>
+
+
+        <!-- POSTS -->
+
+        <div id="posts"></div>
+
+    </main>
+
+
+    <!-- BOTTOM NAVIGATION -->
+
+    <nav class="bottom-nav">
+
+    <button onclick="loadPosts()">
+        🏠
+        <span>Home</span>
+    </button>
+
+    <button onclick="showCreatePost()">
+        ＋
+        <span>Create</span>
+    </button>
+
+    <button onclick="openMessages()">
+        💬
+        <span>Messages</span>
+    </button>
+
+    <button onclick="logout()">
+        👤
+        <span>Logout</span>
+    </button>
+
+</nav>
+
+</div>
+<!-- ================= STORY POPUP ================= -->
+
+<div id="storyModal" class="story-modal">
+
+    <div class="story-modal-box">
+
+        <button
+            class="close-story"
+            onclick="closeStoryModal()"
+        >
+            ✕
+        </button>
+
+        <h2>Create Story</h2>
+
+        <p>Share something with your friends</p>
+
+        <textarea
+            id="storyText"
+            placeholder="What's on your mind?"
+        ></textarea>
+
+        <button
+            class="add-story-btn"
+            onclick="createStory()"
+        >
+            Add Story
+        </button>
+
+    </div>
+
+</div>
+<!-- ================= STORY VIEWER ================= -->
+
+<div id="storyViewer" class="story-viewer">
+
+    <button
+        class="story-close"
+        onclick="closeStoryViewer()"
+    >
+        ✕
+    </button>
+
+    <div class="story-viewer-content">
+
+        <div class="story-progress"></div>
+
+        <div class="story-user">
+            <div class="story-user-icon">
+                😊
+            </div>
+
+            <strong id="storyViewerUser">
+                My Story
+            </strong>
+        </div>
+
+        <div
+            id="storyViewerText"
+            class="story-viewer-text"
+        >
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= SEARCH ================= -->
+
+<div id="searchPage" class="search-page">
+
+    <div class="search-box">
+
+        <button onclick="closeSearch()">←</button>
+
+
+        <input
+            type="text"
+
+            placeholder="Search users or posts..."
+       
+    id="searchInput"
+   
+    oninput="searchUsers()"
+ onkeydown="if(event.key === 'Enter') searchUsers()"
+            >
+
+
+    </div>
+
+
+    <div class="search-result">
+
+        <p>👤 Divya Singh</p>
+
+        <p>👤 Ankit Kumar</p>
+
+        <p>📷 College Memories</p>
+
+        <p>📷 Goa Trip 2026</p>
+
+    </div>
+
+</div>
+
+<!-- ================= NOTIFICATIONS ================= -->
+
+<div id="notificationsPage" class="notifications-page">
+
+    <div class="notifications-header">
+
+        <button onclick="closeNotifications()">
+            ←
+        </button>
+
+        <h2>Notifications</h2>
+
+    </div>
+
+
+    <div class="notification-list">
+
+        <div class="notification">
+
+            <div class="notification-avatar">
+                👩🏻
+            </div>
+
+            <div class="notification-text">
+
+                <strong>Divya</strong>
+                liked your post ❤️
+
+                <small>2 minutes ago</small>
+
+            </div>
+
+        </div>
+
+
+        <div class="notification">
+
+            <div class="notification-avatar">
+                👨🏻
+            </div>
+
+            <div class="notification-text">
+
+                <strong>Ankit</strong>
+                commented on your post 💬
+
+                <small>10 minutes ago</small>
+
+            </div>
+
+        </div>
+
+
+        <div class="notification">
+
+            <div class="notification-avatar">
+                👩🏻
+            </div>
+
+            <div class="notification-text">
+
+                <strong>Saijal</strong>
+                started following you 👤
+
+                <small>1 hour ago</small>
+
+            </div>
+
+        </div>
+
+
+        <div class="notification">
+
+            <div class="notification-avatar">
+                👨🏻
+            </div>
+
+            <div class="notification-text">
+
+                <strong>Rahul</strong>
+                liked your story 🔥
+
+                <small>2 hours ago</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ================= PROFILE PAGE ================= -->
+
+<div id="profilePage" class="profile-page">
+<button onclick="backToSearch()">← Back to Search</button>
+    <div class="profile-header">
+
+        <button onclick="closeProfile()">
+            ←
+        </button>
+
+        <h2>Profile</h2>
+
+    </div>
+
+
+    <div class="profile-info">
+
+        <div class="profile-avatar">
+            👤
+        </div>
+
+        <h2 id="profileName">
+            Bcrypt Test
+        </h2>
+
+        <p id="profileEmail">
+            bcrypttest@gmail.com
+        </p>
+
+        <p class="profile-bio">
+            ✨ Living my little social life
+        </p>
+
+
+        <div class="profile-stats">
+
+            <div>
+                <strong id="profilePostCount">3</strong>
+                <span>Posts</span>
+            </div>
+
+            <div>
+                <strong id="followersCount">0</strong>
+                <span>Followers</span>
+            </div>
+
+            <div>
+          <strong id="followingCount">0</strong>
+<span>Following</span>
+            </div>
+
+        </div>
+
+
+        <button
+            class="edit-profile-btn"
+            onclick="editProfile()"
+        >
+            Edit Profile
+        </button>
+<button
+    class="follow-btn"
+    id="followButton"
+    onclick="followCurrentProfile()"
+>
+    Follow
+</button>
+    </div>
+
+
+    <div class="profile-post-title">
+        My Posts
+    </div>
+
+
+    <div id="profilePosts">
+
+        <div class="profile-post">
+            My first social media post! ❤️
+        </div>
+
+        <div class="profile-post">
+            Hello, this is my first post!
+        </div>
+
+    </div>
+
+</div>
+<!-- ================= EDIT PROFILE ================= -->
+
+<div id="editProfileModal" class="edit-profile-modal">
+
+    <div class="edit-profile-box">
+
+        <button
+            class="close-edit"
+            onclick="closeEditProfile()"
+        >
+            ✕
+        </button>
+
+        <h2>Edit Profile</h2>
+
+        <p>Update your profile information</p>
+
+        <label>Name</label>
+
+        <input
+            type="text"
+            id="editName"
+            placeholder="Enter your name"
+        >
+
+        <label>Bio</label>
+
+        <textarea
+            id="editBio"
+            placeholder="Write something about yourself..."
+        ></textarea>
+
+        <button
+            class="save-profile-btn"
+            onclick="saveProfile()"
+        >
+            Save Changes
+        </button>
+
+    </div>
+
+</div>
+<!-- ================= STORY VIEWER ================= -->
+
+<div
+    id="storyViewer"
+    class="story-viewer"
+>
+
+    <button
+        class="story-close"
+        onclick="closeStory()"
+    >
+        ✕
+    </button>
+
+
+    <div class="story-progress">
+
+        <div></div>
+
+    </div>
+
+
+    <div class="story-user">
+
+        <div class="story-viewer-avatar">
+            👤
+        </div>
+
+        <strong id="storyUserName">
+            Ankit
+        </strong>
+
+    </div>
+
+
+    <div class="story-content">
+
+        <h1 id="storyText">
+            Hey! Welcome to my story 👋
+        </h1>
+
+    </div>
+
+
+    <button
+        class="story-next"
+        onclick="nextStory()"
+    >
+        ›
+    </button>
+
+</div>
+<!-- ================= STORY UPLOAD MODAL ================= -->
+
+<div
+    id="storyUploadModal"
+    class="story-upload-modal"
+>
+
+    <div class="story-upload-box">
+
+        <button
+            class="story-upload-close"
+            onclick="closeStoryUpload()"
+        >
+            ✕
+        </button>
+
+        <h2>📸 Add to Your Story</h2>
+
+        <p>Select an image to share</p>
+
+
+        <label class="upload-image-btn">
+
+            📷 Choose Image
+
+            <input
+                type="file"
+                id="storyImageInput"
+                accept="image/*"
+                onchange="previewStoryImage(event)"
+            >
+
+        </label>
+
+
+        <img
+            id="storyPreview"
+            class="story-preview"
+        >
+
+
+        <button
+            id="shareStoryBtn"
+            class="share-story-btn"
+            onclick="shareStory()"
+        >
+            Share Story 🚀
+        </button>
+
+    </div>
+
+</div>
+<!-- ================= MESSAGES ================= -->
+
+<div id="messagesPanel" class="messages-panel">
+
+    <!-- HEADER -->
+
+    <div class="messages-header">
+
+        <h2>Messages</h2>
+
+        <button onclick="closeMessages()">✕</button>
+
+    </div>
+
+
+    <!-- CONVERSATION LIST -->
+
+    <div class="conversation-list">
+
+        <div
+            class="conversation"
+            onclick="openChat('Alex')"
+        >
+
+            <div class="chat-avatar">
+                A
+            </div>
+
+            <div class="conversation-info">
+
+                <strong>Alex</strong>
+
+                <span>Hey! How are you?</span>
+
+            </div>
+
+            <div class="online-dot"></div>
+
+        </div>
+
+
+        <div
+            class="conversation"
+            onclick="openChat('Rahul')"
+        >
+
+            <div class="chat-avatar">
+                R
+            </div>
+
+            <div class="conversation-info">
+
+                <strong>Rahul</strong>
+
+                <span>Let's meet tomorrow!</span>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="conversation"
+            onclick="openChat('Priya')"
+        >
+
+            <div class="chat-avatar">
+                P
+            </div>
+
+            <div class="conversation-info">
+
+                <strong>Priya</strong>
+
+                <span>Nice post 🔥</span>
+
+            </div>
+
+            <div class="online-dot"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= CHAT SCREEN ================= -->
+
+<div id="chatScreen" class="chat-screen">
+
+    <div class="chat-header">
+
+        <button onclick="backToMessages()">
+            ←
+        </button>
+
+        <div>
+
+            <strong id="chatUserName">
+                User
+            </strong>
+
+            <span id="chatStatus">
+                Online
+            </span>
+
+        </div>
+<button onclick="clearChat()">🗑️</button>
+    </div>
+
+
+    <!-- MESSAGES -->
+
+    <div
+        id="chatMessages"
+        class="chat-messages"
+    >
+
+        <div class="message received">
+            Hey! 👋
+        </div>
+
+        <div class="message sent">
+            Hey! How are you?
+        </div>
+
+    </div>
+
+
+    <!-- MESSAGE INPUT -->
+
+    <div class="message-input">
+
+       <input
+    type="text"
+    id="messageInput"
+    placeholder="Type a message..."
+    onkeydown="handleMessageKey(event)"
+>
+
+        <button onclick="sendMessage()">
+            ➤
+        </button>
+
+    </div>
+
+</div>
+</body>
+</html>
