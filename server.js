@@ -9,8 +9,8 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const User = require("./Users");
-const Post = require("./Post");
-const Comment = require("./Comment");
+const Post = require("./post");
+const Comment = require("./comment");
 const Notification = require("./models/Notification");
 const app = express();
 
