@@ -351,48 +351,35 @@ app.post("/login", async (req, res) => {
 // =========================
 // CREATE POST
 // =========================
-
 app.post("/posts", async (req, res) => {
-    
     try {
+        const { user, content, ownerEmail } = req.body;
 
-       const newPost = new Post({
-    user: user,
-    content: content,
-    ownerEmail: req.body.ownerEmail || ""
-});
+        if (!user || !content) {
+            return res.status(400).json({
+                message: "User and content are required"
+            });
+        }
 
-        await post.save();
-const sender = await User.findOne({
-    email: email
-});
+        const newPost = new Post({
+            user: user,
+            content: content,
+            ownerEmail: ownerEmail || ""
+        });
 
-if (
-    sender &&
-    post.ownerEmail &&
-    post.ownerEmail !== email
-) {
-    await Notification.create({
-        recipientEmail: post.ownerEmail,
-        senderEmail: email,
-        senderName: sender.name,
-        type: "like",
-        message: "liked your post ❤️",
-        postId: post._id
-    });
-}
+        await newPost.save();
+
         res.status(201).json({
             message: "Post created successfully",
-            post: post
+            post: newPost
         });
 
     } catch (error) {
+        console.log("CREATE POST ERROR:", error);
 
-        console.log(error);
-
-       res.status(500).json({
-    message: error.message
-});
+        res.status(500).json({
+            message: error.message
+        });
     }
 });
 // =========================
