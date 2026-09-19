@@ -2732,7 +2732,20 @@ async function login() {
 }
 
 
-            
+       function getCurrentUser() {
+    const user = localStorage.getItem("user");
+
+    if (!user) {
+        return null;
+    }
+
+    try {
+        return JSON.parse(user);
+    } catch (error) {
+        console.log("User data error:", error);
+        return null;
+    }
+}     
 
 async function loadPosts() {
 
@@ -2800,7 +2813,8 @@ async function loadPosts() {
             const comments =
                 await commentResponse.json();
 
-     
+     const commentsList = document.createElement("div");
+commentsList.className = "comments-list";
 comments.forEach(comment => {
 
     const commentBox = document.createElement("div");
